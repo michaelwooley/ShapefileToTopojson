@@ -6,8 +6,16 @@ from os import path
 
 
 class ShapefileToTopojson(object):
-  def __init__(self, in_files: str, out_file: [str, None]) -> None:
+  def __init__(
+    self,
+    in_files: str,
+    out_file: [str, None],
+    quantization: float = 1e6,
+    simplify: float = 0.0001
+  ) -> None:
 
+    self.simplify = simplify
+    self.quantization = quantization
     self.in_files = in_files if isinstance(in_files, list) else [in_files]
     self.out_file = out_file
 
@@ -70,7 +78,12 @@ class ShapefileToTopojson(object):
       json.dump({"type": "FeatureCollection", "features": buffer}, geojson)
 
     # Write the topojson file
-    topojson(temp_file, out_file)
+    topojson(
+      temp_file,
+      out_file,
+      quantization=self.quantization,
+      simplify=self.simplify
+    )
 
     # Delete GeoJson File
     os.remove(temp_file)
