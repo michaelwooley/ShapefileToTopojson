@@ -22,7 +22,7 @@ input_template = 'demos/data/shapefiles/cb_2016_{:02d}_puma10_500k.zip'
 inf = [input_template.format(ii) for ii in [1, 5, 13, 12, 28, 37, 45, 47, 22]]
 outf = 'demos/data/topojson/southeast_us_puma_2016.json'
 
-stj = ShapefileToTopojson(inf, outf)
+stj = ShapefileToTopojson(inf, outf, simplify=0.01)
 
 # Entire US
 inf = [
